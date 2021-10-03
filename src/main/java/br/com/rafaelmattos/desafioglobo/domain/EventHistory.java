@@ -3,14 +3,21 @@ package br.com.rafaelmattos.desafioglobo.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class EventHistory implements Serializable{
-	private static final long serialVersionUID = 5749251306354875012L;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class EventHistory implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String type;
 	private String subscription_id;
 	private LocalDateTime created_at = LocalDateTime.now();
-	
 	
 	public EventHistory() {
 	}
