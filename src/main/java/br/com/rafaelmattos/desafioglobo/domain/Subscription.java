@@ -31,7 +31,10 @@ public class Subscription implements Serializable {
 	private Date created_at;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date updated_at;
-	
+		
+	public Subscription() {
+	}
+
 	public Subscription(Integer id, Status status_id, Date created_at, Date updated_at) {
 		this.id = id;
 		this.status_id = status_id;

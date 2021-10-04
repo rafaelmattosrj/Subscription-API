@@ -1,6 +1,7 @@
 package br.com.rafaelmattos.desafioglobo.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,12 @@ public class EventHistoryController {
 	@Autowired
 	private EventHistoryService eventHistoryService;
 
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<EventHistory>> findAll() {
+		List<EventHistory> listEventHistory = eventHistoryService.findAll();
+		return ResponseEntity.ok().body(listEventHistory);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		EventHistory eventHistory = eventHistoryService.find(id);

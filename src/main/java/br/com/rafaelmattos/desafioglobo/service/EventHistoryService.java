@@ -1,5 +1,6 @@
 package br.com.rafaelmattos.desafioglobo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ public class EventHistoryService {
 	@Autowired
 	private EventHistoryRepository eventHistoryRepository;
 
+	public List<EventHistory> findAll() {
+		return eventHistoryRepository.findAll();
+	}
+	
 	public EventHistory find(Integer id) {
 		Optional<EventHistory> eventHistory = eventHistoryRepository.findById(id);
 		return eventHistory.orElseThrow(() -> new ObjectNotFoundException(
