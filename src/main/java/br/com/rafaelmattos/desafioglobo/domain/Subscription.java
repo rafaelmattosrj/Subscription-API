@@ -1,13 +1,13 @@
 package br.com.rafaelmattos.desafioglobo.domain;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,34 +19,34 @@ public class Subscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JoinColumn(name = "subscription_id")
-	private UUID subscription_id = UUID.randomUUID();
+	private Integer id;
 
 	@OneToOne
 	@JoinColumn(name = "status_id")
-	@MapsId
 	private Status status_id;
 
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private LocalDateTime created_at = LocalDateTime.now();
+	private Date created_at;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private LocalDateTime updated_at = LocalDateTime.now();
-
-	public Subscription(UUID subscription_id, Status status_id, LocalDateTime created_at, LocalDateTime updated_at) {
-		this.subscription_id = subscription_id;
+	private Date updated_at;
+	
+	public Subscription(Integer id, Status status_id, Date created_at, Date updated_at) {
+		this.id = id;
 		this.status_id = status_id;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
-
-	public UUID getSubscription_id() {
-		return subscription_id;
-	}
 	
-	public void setSubscription_id(UUID subscription_id) {
-		this.subscription_id = subscription_id;
+	public Integer getId() {
+		return id;
 	}
-		
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Status getStatus_id() {
 		return status_id;
 	}
@@ -55,29 +55,30 @@ public class Subscription implements Serializable {
 		this.status_id = status_id;
 	}
 
-	public LocalDateTime getCreated_at() {
+	public Date getCreated_at() {
 		return created_at;
 	}
 	
-	public void setCreated_at(LocalDateTime created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
 	
-	public LocalDateTime getUpdated_at() {
+	public Date getUpdated_at() {
 		return updated_at;
 	}
 	
-	public void setUpdated_at(LocalDateTime updated_at) {
+	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((subscription_id == null) ? 0 : subscription_id.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -87,13 +88,13 @@ public class Subscription implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Subscription other = (Subscription) obj;
-		if (subscription_id == null) {
-			if (other.subscription_id != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!subscription_id.equals(other.subscription_id))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-	
+		
 }
 

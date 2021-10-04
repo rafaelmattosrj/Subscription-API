@@ -1,7 +1,7 @@
 package br.com.rafaelmattos.desafioglobo.domain;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,12 +32,12 @@ public class EventHistory implements Serializable {
 	private Subscription subscription_id;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private LocalDateTime created_at = LocalDateTime.now();
+	private Date created_at;
 	
 	public EventHistory() {
 	}
 
-	public EventHistory(Integer id, SubscriptionType type, Subscription subscription_id, LocalDateTime created_at) {
+	public EventHistory(Integer id, SubscriptionType type, Subscription subscription_id, Date created_at) {
 		this.id = id;
 		this.type = type.getCod();
 		this.subscription_id = subscription_id;
@@ -68,11 +68,11 @@ public class EventHistory implements Serializable {
 		this.subscription_id = subscription_id;
 	}
 
-	public LocalDateTime getCreated_at() {
+	public Date getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(LocalDateTime created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
 
