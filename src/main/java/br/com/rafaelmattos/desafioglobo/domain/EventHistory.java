@@ -3,26 +3,36 @@ package br.com.rafaelmattos.desafioglobo.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Table(name = "EventHistory")
 @Entity
 public class EventHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "event_history_id")
 	private Integer id;
 	private String type;
-	private String subscription_id;
+	
+	@ManyToOne
+	@JoinColumn(name="subscription_id")
+	private Subscription subscription_id;
+	
 	private LocalDateTime created_at = LocalDateTime.now();
 	
 	public EventHistory() {
 	}
 
-	public EventHistory(Integer id, String type, String subscription_id, LocalDateTime created_at) {
+	public EventHistory(Integer id, String type, Subscription subscription_id, LocalDateTime created_at) {
 		this.id = id;
 		this.type = type;
 		this.subscription_id = subscription_id;
@@ -45,11 +55,11 @@ public class EventHistory implements Serializable {
 		this.type = type;
 	}
 
-	public String getSubscription_id() {
+	public Subscription getSubscription_id() {
 		return subscription_id;
 	}
 
-	public void setSubscription_id(String subscription_id) {
+	public void setSubscription_id(Subscription subscription_id) {
 		this.subscription_id = subscription_id;
 	}
 
