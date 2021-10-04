@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 
 @Table(name = "EventHistory")
@@ -29,6 +31,7 @@ public class EventHistory implements Serializable {
 	@JoinColumn(name="subscription_id")
 	private Subscription subscription_id;
 	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private LocalDateTime created_at = LocalDateTime.now();
 	
 	public EventHistory() {

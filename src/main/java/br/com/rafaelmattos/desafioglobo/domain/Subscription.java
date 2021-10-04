@@ -11,6 +11,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Table(name = "Subscription")
 @Entity
 public class Subscription implements Serializable {
@@ -25,7 +27,9 @@ public class Subscription implements Serializable {
 	@MapsId
 	private Status status_id;
 
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private LocalDateTime created_at = LocalDateTime.now();
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private LocalDateTime updated_at = LocalDateTime.now();
 
 	public Subscription(UUID subscription_id, Status status_id, LocalDateTime created_at, LocalDateTime updated_at) {
