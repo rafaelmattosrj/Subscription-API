@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,6 +22,7 @@ public class Subscription implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "status_id")
+	@MapsId
 	private Status status_id;
 
 	private LocalDateTime created_at = LocalDateTime.now();

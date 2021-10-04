@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
+
 @Table(name = "EventHistory")
 @Entity
 public class EventHistory implements Serializable {
@@ -21,7 +23,7 @@ public class EventHistory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "event_history_id")
 	private Integer id;
-	private String type;
+	private Integer type;
 	
 	@ManyToOne
 	@JoinColumn(name="subscription_id")
@@ -32,9 +34,9 @@ public class EventHistory implements Serializable {
 	public EventHistory() {
 	}
 
-	public EventHistory(Integer id, String type, Subscription subscription_id, LocalDateTime created_at) {
+	public EventHistory(Integer id, SubscriptionType type, Subscription subscription_id, LocalDateTime created_at) {
 		this.id = id;
-		this.type = type;
+		this.type = type.getCod();
 		this.subscription_id = subscription_id;
 		this.created_at = created_at;
 	}
@@ -47,12 +49,12 @@ public class EventHistory implements Serializable {
 		this.id = id;
 	}
 
-	public String getType() {
-		return type;
+	public SubscriptionType getType() {
+		return SubscriptionType.toEnum(type);
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setType(SubscriptionType type) {
+		this.type = type.getCod();
 	}
 
 	public Subscription getSubscription_id() {
