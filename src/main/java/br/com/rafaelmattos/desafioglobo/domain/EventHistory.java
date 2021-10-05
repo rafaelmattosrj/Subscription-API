@@ -29,19 +29,20 @@ public class EventHistory implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="subscription_id")
-	private Subscription subscription_id;
+	private Subscription subscriptionId;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date created_at;
+	@Column(name="created_at")
+	private Date createdAt;
 	
 	public EventHistory() {
 	}
 
-	public EventHistory(Integer id, SubscriptionType type, Subscription subscription_id, Date created_at) {
+	public EventHistory(Integer id, SubscriptionType type, Subscription subscriptionId, Date createdAt) {
 		this.id = id;
 		this.type = type.getCod();
-		this.subscription_id = subscription_id;
-		this.created_at = created_at;
+		this.subscriptionId = subscriptionId;
+		this.createdAt = createdAt;
 	}
 
 	public Integer getId() {
@@ -60,20 +61,20 @@ public class EventHistory implements Serializable {
 		this.type = type.getCod();
 	}
 
-	public Subscription getSubscription_id() {
-		return subscription_id;
+	public Subscription getSubscriptionId() {
+		return subscriptionId;
 	}
 
-	public void setSubscription_id(Subscription subscription_id) {
-		this.subscription_id = subscription_id;
+	public void setSubscriptionId(Subscription subscriptionId) {
+		this.subscriptionId = subscriptionId;
 	}
 
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override

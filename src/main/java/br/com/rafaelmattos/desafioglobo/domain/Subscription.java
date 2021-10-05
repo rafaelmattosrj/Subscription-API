@@ -3,6 +3,7 @@ package br.com.rafaelmattos.desafioglobo.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,23 +26,26 @@ public class Subscription implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "status_id")
-	private Status status_id;
+	private Status statusId;
 
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date created_at;
+	@Column(name="created_at")
+	private Date createdAt;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date updated_at;
+	@Column(name="updated_at")
+	private Date updatedAt;
 		
 	public Subscription() {
 	}
 
-	public Subscription(Integer id, Status status_id, Date created_at, Date updated_at) {
+	public Subscription(Integer id, Status statusId, Date createdAt, Date updatedAt) {
 		this.id = id;
-		this.status_id = status_id;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
+		this.statusId = statusId;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
-	
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -51,27 +55,31 @@ public class Subscription implements Serializable {
 	}
 
 	public Status getStatus_id() {
-		return status_id;
+		return statusId;
+	}
+	
+	public Status getStatusId() {
+		return statusId;
 	}
 
-	public void setStatus_id(Status status_id) {
-		this.status_id = status_id;
+	public void setStatusId(Status statusId) {
+		this.statusId = statusId;
 	}
 
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
-	
-	public Date getUpdated_at() {
-		return updated_at;
+
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
-	
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	@Override

@@ -2,9 +2,9 @@ package br.com.rafaelmattos.desafioglobo.domain.enums;
 
 public enum SubscriptionType {
 
-	SUBSCRIPTION_PURCHASED(1, "Subscription Purchased"), 
-	SUBSCRIPTION_CANCELED(2, "Subscription Canceled"),
-	SUBSCRIPTION_RESTARTED(3, "Subscription Restarted");
+	SUBSCRIPTION_PURCHASED(1, "SUBSCRIPTION PURCHASED"), 
+	SUBSCRIPTION_CANCELED(2, "SUBSCRIPTION CANCELED"),
+	SUBSCRIPTION_RESTARTED(3, "SUBSCRIPTION RESTARTED");
 
 	private int cod;
 	private String description;
