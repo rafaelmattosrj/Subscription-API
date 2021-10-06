@@ -1,22 +1,21 @@
 package br.com.rafaelmattos.desafioglobo.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 
-@Table(name = "EventHistory")
 @Entity
 public class EventHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,22 +24,22 @@ public class EventHistory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "event_history_id")
 	private Integer id;
-	private Integer type;
+	private String type;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="subscription_id")
 	private Subscription subscriptionId;
 	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@Column(name="created_at")
-	private Date createdAt;
+	private LocalDateTime createdAt;
 	
 	public EventHistory() {
 	}
 
-	public EventHistory(Integer id, SubscriptionType type, Subscription subscriptionId, Date createdAt) {
+	public EventHistory(Integer id, SubscriptionType type, Subscription subscriptionId, LocalDateTime createdAt) {
 		this.id = id;
-		this.type = type.getCod();
+		this.type = type.getDescription();
 		this.subscriptionId = subscriptionId;
 		this.createdAt = createdAt;
 	}
@@ -57,8 +56,8 @@ public class EventHistory implements Serializable {
 		return SubscriptionType.toEnum(type);
 	}
 
-	public void setType(SubscriptionType type) {
-		this.type = type.getCod();
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Subscription getSubscriptionId() {
@@ -69,11 +68,11 @@ public class EventHistory implements Serializable {
 		this.subscriptionId = subscriptionId;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 

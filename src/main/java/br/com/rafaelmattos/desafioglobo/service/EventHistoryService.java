@@ -26,8 +26,8 @@ public class EventHistoryService {
 				.orElseThrow(() -> new ObjectNotFoundException(
 						"Object not found! Id: " + subscriptionId + ", Type: " + Subscription.class.getName()));
 		
-		List<EventHistory> events = eventHistoryRepository.findAllBySubscriptionId(subscription);
-		return events;
+		List<EventHistory> eventHistory = eventHistoryRepository.findAllBySubscriptionId(subscription);
+		return eventHistory;
 	}
 	
 	public EventHistory find(Integer id) {
