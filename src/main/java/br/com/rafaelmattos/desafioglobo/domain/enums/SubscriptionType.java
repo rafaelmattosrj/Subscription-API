@@ -22,7 +22,7 @@ public enum SubscriptionType {
 		return description;
 	}
 
-	public static SubscriptionType toEnum(Integer type) {
+	public static SubscriptionType toEnum(String type) {
 
 		if (type == null) {
 			return null;

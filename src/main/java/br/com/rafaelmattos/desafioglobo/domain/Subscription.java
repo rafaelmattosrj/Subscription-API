@@ -1,7 +1,7 @@
 package br.com.rafaelmattos.desafioglobo.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,35 +10,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Table(name = "Subscription")
 @Entity
 public class Subscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JoinColumn(name = "subscription_id")
+	@Column(name = "subscription_id")
 	private Integer id;
 
 	@OneToOne
 	@JoinColumn(name = "status_id")
 	private Status statusId;
 
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@Column(name="created_at")
-	private Date createdAt;
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private LocalDateTime createdAt;
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@Column(name="updated_at")
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
 		
 	public Subscription() {
 	}
 
-	public Subscription(Integer id, Status statusId, Date createdAt, Date updatedAt) {
+	public Subscription(Integer id, Status statusId, LocalDateTime createdAt, LocalDateTime updatedAt) {
 		this.id = id;
 		this.statusId = statusId;
 		this.createdAt = createdAt;
@@ -66,19 +64,19 @@ public class Subscription implements Serializable {
 		this.statusId = statusId;
 	}
 
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getUpdatedAt() {
+	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
