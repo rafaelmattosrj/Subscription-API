@@ -29,7 +29,7 @@ public enum SubscriptionType {
 		}
 
 		for (SubscriptionType x : SubscriptionType.values()) {
-			if (type.equals(x.getCod())) {
+			if (type.equals(x.getDescription())) {
 				return x;
 			}
 		}
