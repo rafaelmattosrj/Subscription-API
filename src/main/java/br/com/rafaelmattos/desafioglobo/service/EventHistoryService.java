@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.rafaelmattos.desafioglobo.domain.EventHistory;
 import br.com.rafaelmattos.desafioglobo.domain.Subscription;
+import br.com.rafaelmattos.desafioglobo.exception.ObjectNotFoundException;
 import br.com.rafaelmattos.desafioglobo.repository.EventHistoryRepository;
 import br.com.rafaelmattos.desafioglobo.repository.SubscriptionRepository;
-import br.com.rafaelmattos.desafioglobo.service.exception.ObjectNotFoundException;
 
 @Service
 public class EventHistoryService {
@@ -35,10 +35,5 @@ public class EventHistoryService {
 		return eventHistory.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + EventHistory.class.getName()));
 	}
-	
-	public EventHistory insert(EventHistory eventHistory) {
-		eventHistory.setId(null);
-		return eventHistoryRepository.save(eventHistory);
-	}
-	
+		
 }

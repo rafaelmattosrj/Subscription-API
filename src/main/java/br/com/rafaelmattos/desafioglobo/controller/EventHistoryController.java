@@ -13,9 +13,10 @@ import br.com.rafaelmattos.desafioglobo.domain.EventHistory;
 import br.com.rafaelmattos.desafioglobo.dto.EventHistoryResponse;
 import br.com.rafaelmattos.desafioglobo.service.EventHistoryService;
 import br.com.rafaelmattos.desafioglobo.util.Converter;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/eventhistory")
+@RequestMapping(value = "/desafioglobo")
 public class EventHistoryController {
 
 	@Autowired
@@ -24,14 +25,16 @@ public class EventHistoryController {
 	@Autowired
 	private Converter converter;
 
-	@RequestMapping(path = "/subscription/{id}",method = RequestMethod.GET)
+	@ApiOperation(value = "Return all histories by subscription id.")
+	@RequestMapping(path = "/eventhistory/subscription/{id}",method = RequestMethod.GET)
 	public ResponseEntity<List<EventHistoryResponse>> findAllHistoriesBySubscriptionId(@PathVariable Integer id) {
 		List<EventHistory> listEventHistory = eventHistoryService.findAllBySubscriptionId(id);
 		List<EventHistoryResponse> listEventHistoryResponse = converter.toEventHistoryResponse(listEventHistory);
 		return ResponseEntity.ok().body(listEventHistoryResponse);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "Search event history by id.")
+	@RequestMapping(value = "/eventhistory/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		EventHistory eventHistory = eventHistoryService.find(id);
 		EventHistoryResponse eventHistoryResponse = converter.toEventHistoryResponse(eventHistory);

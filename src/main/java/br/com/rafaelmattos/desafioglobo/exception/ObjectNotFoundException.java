@@ -1,4 +1,4 @@
-package br.com.rafaelmattos.desafioglobo.service.exception;
+package br.com.rafaelmattos.desafioglobo.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
 

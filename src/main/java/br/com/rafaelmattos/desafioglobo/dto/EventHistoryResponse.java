@@ -1,7 +1,7 @@
 package br.com.rafaelmattos.desafioglobo.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -15,8 +15,8 @@ public class EventHistoryResponse implements Serializable {
 		private String type;
 		private Subscription subscriptionId;
 		
-		@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-		private Date createdAt;
+		@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
+		private LocalDateTime createdAt;
 		
 		public EventHistoryResponse() {
 		}
@@ -52,11 +52,11 @@ public class EventHistoryResponse implements Serializable {
 			this.subscriptionId = subscriptionId;
 		}
 
-		public Date getCreatedAt() {
+		public LocalDateTime getCreatedAt() {
 			return createdAt;
 		}
 
-		public void setCreatedAt(Date createdAt) {
+		public void setCreatedAt(LocalDateTime createdAt) {
 			this.createdAt = createdAt;
 		}
 			
