@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+    
+ mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    networks:
+      - java-mysql-network
+      
+ desafioglobo:    
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    image: rafael/desafioglobo
+    container_name: desafioglobo
+    environment:
+     - SPRING_DATA_MYSQL_URI=jdbc:mysql://localhost:3306/desafioglobo
+    ports:
+     - "80:80"
+    depends_on: 
+    - "mysql"
+           
+networks: 
+  java-mysql-network:
+    driver: bridge
+    
+   
