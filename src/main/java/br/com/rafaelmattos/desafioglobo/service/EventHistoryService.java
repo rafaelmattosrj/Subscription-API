@@ -30,7 +30,7 @@ public class EventHistoryService {
 		return eventHistory;
 	}
 	
-	public EventHistory find(Integer id) {
+	public EventHistory findEventHistoryById(Integer id) {
 		Optional<EventHistory> eventHistory = eventHistoryRepository.findById(id);
 		return eventHistory.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + EventHistory.class.getName()));

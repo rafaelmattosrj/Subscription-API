@@ -19,16 +19,16 @@ public class SubscriptionService {
 
 	@Autowired
 	SubscriptionRepository subscriptionRepository;
-	
+
 	@Autowired
 	EventHistoryRepository eventHistoryRepository;
-	
+
 	public Subscription findSubscriptionById(Integer id) {
 		Optional<Subscription> subscription = subscriptionRepository.findById(id);
 		return subscription.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + Subscription.class.getName()));
-	}	
-	
+	}
+
 	public Subscription createSubscription() {
 		LocalDateTime date = LocalDateTime.now();
 		Subscription subscription = new Subscription();
@@ -40,23 +40,39 @@ public class SubscriptionService {
 		subscription.setCreatedAt(date);
 		subscription.setUpdatedAt(date);
 		subscription = subscriptionRepository.save(subscription);
-		
+
 		EventHistory eventHistory = new EventHistory();
 		eventHistory.setType(subscriptionPurchased.getDescription());
 		eventHistory.setSubscriptionId(subscription);
 		eventHistory.setCreatedAt(date);
 		eventHistoryRepository.save(eventHistory);
-				
+
 		return subscription;
 	}
 
 	public Subscription updateSubscription(Subscription subscription) {
 		Subscription updateSubscription = findSubscriptionById(subscription.getId());
-		updateData(updateSubscription, subscription);
+		LocalDateTime date = LocalDateTime.now();
+		updateSubscription.setUpdatedAt(date);
+		if (subscription.getStatusId().getName() == "SUBSCRIPTION_PURCHASED") {
+			Status status = new Status();
+			status.setId(2);
+			status.setName("SUBSCRIPTION_CANCELED");
+			updateSubscription.setStatusId(status);
+		}
+		if (subscription.getStatusId().getName() == "SUBSCRIPTION_CANCELED") {
+			Status status = new Status();
+			status.setId(3);
+			status.setName("SUBSCRIPTION_RESTARTED");
+			updateSubscription.setStatusId(status);
+		}
+		if (subscription.getStatusId().getName() == "SUBSCRIPTION_RESTARTED") {
+			Status status = new Status();
+			status.setId(2);
+			status.setName("SUBSCRIPTION_CANCELED");
+			updateSubscription.setStatusId(status);
+		}
 		return subscriptionRepository.save(updateSubscription);
-	}	
-
-	private void updateData(Subscription updateSubscription, Subscription subscription) {
-		updateSubscription.setUpdatedAt(LocalDateTime.now());
 	}
+
 }

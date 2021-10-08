@@ -35,8 +35,8 @@ public class EventHistoryController {
 	
 	@ApiOperation(value = "Search event history by id.")
 	@RequestMapping(value = "/eventhistory/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		EventHistory eventHistory = eventHistoryService.find(id);
+	public ResponseEntity<?> findEventHistoryById(@PathVariable Integer id) {
+		EventHistory eventHistory = eventHistoryService.findEventHistoryById(id);
 		EventHistoryResponse eventHistoryResponse = converter.toEventHistoryResponse(eventHistory);
 		return ResponseEntity.ok().body(eventHistoryResponse);
 	}
