@@ -25,6 +25,7 @@ public class SubscriptionService {
 
 	public Subscription findSubscriptionById(Integer id) {
 		Optional<Subscription> subscription = subscriptionRepository.findById(id);
+		System.out.print(subscription);
 		return subscription.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + Subscription.class.getName()));
 	}
@@ -50,23 +51,24 @@ public class SubscriptionService {
 		return subscription;
 	}
 
-	public Subscription updateSubscription(Subscription subscription) {
-		Subscription updateSubscription = findSubscriptionById(subscription.getId());
+	public Subscription updateSubscription(Integer id) {
+		Subscription updateSubscription = subscriptionRepository.findById(id).get();
+		System.out.print(updateSubscription);
 		LocalDateTime date = LocalDateTime.now();
 		updateSubscription.setUpdatedAt(date);
-		if (subscription.getStatusId().getName() == "SUBSCRIPTION_PURCHASED") {
+		if (updateSubscription.getStatusId().getName() == "SUBSCRIPTION_PURCHASED") {
 			Status status = new Status();
 			status.setId(2);
 			status.setName("SUBSCRIPTION_CANCELED");
 			updateSubscription.setStatusId(status);
 		}
-		if (subscription.getStatusId().getName() == "SUBSCRIPTION_CANCELED") {
+		if (updateSubscription.getStatusId().getName() == "SUBSCRIPTION_CANCELED") {
 			Status status = new Status();
 			status.setId(3);
 			status.setName("SUBSCRIPTION_RESTARTED");
 			updateSubscription.setStatusId(status);
 		}
-		if (subscription.getStatusId().getName() == "SUBSCRIPTION_RESTARTED") {
+		if (updateSubscription.getStatusId().getName() == "SUBSCRIPTION_RESTARTED") {
 			Status status = new Status();
 			status.setId(2);
 			status.setName("SUBSCRIPTION_CANCELED");

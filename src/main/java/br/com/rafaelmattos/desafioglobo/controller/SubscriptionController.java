@@ -52,9 +52,7 @@ public class SubscriptionController {
 	  @RequestMapping(path = "/subscription/{id}", method = RequestMethod.PATCH)
 	  public ResponseEntity<Void> updateSubscription(
 			  @Valid @RequestBody SubscriptionRequest subscriptionRequest, @PathVariable Integer id) {
-		  Subscription subscription = converter.requestToSubscription(subscriptionRequest);
-		  subscription.setId(id);
-		  subscriptionService.updateSubscription(subscription);
+		  subscriptionService.updateSubscription(id);
 	      return ResponseEntity.noContent().build();
 	  }
 
