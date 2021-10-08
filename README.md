@@ -10,6 +10,8 @@ ________________________________________
 Esta aplicação foi desenvolvida com arquitetura API REST e tem por objeto atualizar assinaturas do usuário de acordo com as notificações. 
 URL Base: http://localhost:8080/desafioglobo/
 
+É necessario um banco de dados MySQL com o schema desafioglobo criado.
+
 ________________________________________
 Observação:
 •	Pode ser encontrado no path http://localhost:8080/desafioglobo/swagger-ui.html informações sobre os recursos da aplicação.
