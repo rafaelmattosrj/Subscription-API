@@ -11,6 +11,6 @@ import br.com.rafaelmattos.desafioglobo.domain.Subscription;
 @Repository
 public interface EventHistoryRepository extends JpaRepository<EventHistory, Integer> {
 
-	List<EventHistory> findAllBySubscriptionId(Subscription subscriptionId);
+	List<EventHistory> findAllBySubscription(Subscription subscriptionId);
 		
 }

@@ -17,6 +17,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import br.com.rafaelmattos.desafioglobo.DesafioGloboApplication;
 import br.com.rafaelmattos.desafioglobo.domain.EventHistory;
+import br.com.rafaelmattos.desafioglobo.domain.Status;
+import br.com.rafaelmattos.desafioglobo.domain.Subscription;
+import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 import br.com.rafaelmattos.desafioglobo.repository.EventHistoryRepository;
 
 @SpringBootTest(classes = DesafioGloboApplication.class)
@@ -30,32 +33,55 @@ class EventHistoryServiceTest {
 
 	@BeforeEach
 	public void setup() {
-		standaloneSetup(this.eventHistoryService);
+		standaloneSetup(this.eventHistoryRepository);
 	}
 	
 	@Test
 	public void returnSucess_testFindAllEventSubscription() {
+		//ERRO
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
-		EventHistory eventHistory = new EventHistory();
-		eventHistory.setId(1);
-		eventHistory.setType("SUBSCRIPTION_PURCHASED");
-		eventHistory.setSubscriptionId(null);
-		eventHistory.setCreatedAt(LocalDateTime.now());
-		
-		Optional<List<EventHistory>> optionalEventHistory = Optional.of(Arrays.asList(eventHistory));
-		when(eventHistoryRepository.findById(1)).thenReturn(null);
-		List<EventHistory> eventHistoryReturn = eventHistoryService.findAllBySubscriptionId(1);
-		assertEquals(optionalEventHistory, eventHistoryReturn);	
+		Subscription subscription = new Subscription(
+				"402880937c74dc45017c7506ad910004",
+				status,
+				date,
+				date
+		);
+
+		EventHistory eventHistory = new EventHistory(
+				1,
+				SubscriptionType.SUBSCRIPTION_PURCHASED.getType(),
+				subscription,
+				date
+		);
+				
+		List<EventHistory> eventHistories = Arrays.asList(eventHistory);
+		when(eventHistoryRepository.findAll()).thenReturn(eventHistories);
+		List<EventHistory> eventHistoryReturn = eventHistoryService
+				.findAllBySubscriptionId("402880937c74dc45017c7506ad910004");
+		assertEquals(eventHistories, eventHistoryReturn);	
 	}
 	
 	@Test
 	public void returnSucess_testFindbyId() {
+		//FAIL
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
-		EventHistory eventHistory = new EventHistory();
-		eventHistory.setId(1);
-		eventHistory.setType("SUBSCRIPTION_PURCHASED");
-		eventHistory.setSubscriptionId(null);
-		eventHistory.setCreatedAt(LocalDateTime.now());
+		Subscription subscription = new Subscription(
+				"402880937c74dc45017c7506ad910004",
+				status,
+				date,
+				date
+		);
+
+		EventHistory eventHistory = new EventHistory(
+				1,
+				SubscriptionType.SUBSCRIPTION_PURCHASED.getType(),
+				subscription,
+				date
+		);
 
 		Optional<EventHistory> optionalEventHistory = Optional.of(eventHistory);
 		when(eventHistoryRepository.findById(1)).thenReturn(optionalEventHistory);

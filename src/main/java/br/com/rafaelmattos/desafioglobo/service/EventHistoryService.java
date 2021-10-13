@@ -17,16 +17,18 @@ public class EventHistoryService {
 
 	@Autowired
 	private EventHistoryRepository eventHistoryRepository;
-	
 	@Autowired
 	private SubscriptionRepository subscriptionRepository;
 
-	public List<EventHistory> findAllBySubscriptionId(Integer subscriptionId) {
+	public EventHistoryService() {
+	}
+
+	public List<EventHistory> findAllBySubscriptionId(String subscriptionId) {
 		Subscription subscription = subscriptionRepository.findById(subscriptionId)
 				.orElseThrow(() -> new ObjectNotFoundException(
 						"Object not found! Id: " + subscriptionId + ", Type: " + Subscription.class.getName()));
 		
-		List<EventHistory> eventHistory = eventHistoryRepository.findAllBySubscriptionId(subscription);
+		List<EventHistory> eventHistory = eventHistoryRepository.findAllBySubscription(subscription);
 		return eventHistory;
 	}
 	
@@ -35,5 +37,4 @@ public class EventHistoryService {
 		return eventHistory.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + EventHistory.class.getName()));
 	}
-		
 }

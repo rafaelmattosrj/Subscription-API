@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +25,9 @@ public class EventHistory implements Serializable {
 	private Integer id;
 	private String type;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="subscription_id")
-	private Subscription subscriptionId;
+	private Subscription subscription;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@Column(name="created_at")
@@ -37,10 +36,16 @@ public class EventHistory implements Serializable {
 	public EventHistory() {
 	}
 
-	public EventHistory(Integer id, SubscriptionType type, Subscription subscriptionId, LocalDateTime createdAt) {
+	public EventHistory(String type, Subscription subscription, LocalDateTime createdAt) {
+		this.type = type;
+		this.subscription = subscription;
+		this.createdAt = createdAt;
+	}
+
+	public EventHistory(Integer id, String type, Subscription subscriptionId, LocalDateTime createdAt) {
 		this.id = id;
-		this.type = type.getDescription();
-		this.subscriptionId = subscriptionId;
+		this.type = type;
+		this.subscription = subscriptionId;
 		this.createdAt = createdAt;
 	}
 
@@ -60,12 +65,12 @@ public class EventHistory implements Serializable {
 		this.type = type;
 	}
 
-	public Subscription getSubscriptionId() {
-		return subscriptionId;
+	public Subscription getSubscription() {
+		return subscription;
 	}
 
-	public void setSubscriptionId(Subscription subscriptionId) {
-		this.subscriptionId = subscriptionId;
+	public void setSubscription(Subscription subscription) {
+		this.subscription = subscription;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -94,11 +99,8 @@ public class EventHistory implements Serializable {
 			return false;
 		EventHistory other = (EventHistory) obj;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+			return other.id == null;
+		} else return id.equals(other.id);
 	}
 	
 }
