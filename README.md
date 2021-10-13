@@ -7,14 +7,15 @@ API de atualização da assinatura do usuário!
 
 Bem-vindo ao ReadMe da API DesafioGlobo.
 ________________________________________
-Esta aplicação foi desenvolvida com arquitetura API REST e tem por objeto atualizar assinaturas do usuário de acordo com as notificações. 
+Esta aplicação foi desenvolvida com arquitetura API REST e tem por objetivo criar, atualizar e armazenar histórico assinaturas do usuário de acordo com as notificações.
 URL Base: http://localhost:8080/desafioglobo/
 
-É necessario um banco de dados MySQL com o schema desafioglobo criado.
+A aplicação utiliza como o MySQL como banco de dados com o schema desafioglobo criado.
 
 ________________________________________
 Observação:
-•	Pode ser encontrado no path http://localhost:8080/desafioglobo/swagger-ui.html informações sobre os recursos da aplicação.
+
+•	Pode ser encontrado no path http://localhost:8080/swagger-ui.html informações sobre os recursos da aplicação.
 
 A API DesafioGlobo está em constante evolução e até o momento foram utilizados no desenvolvimento:
 
@@ -70,33 +71,60 @@ Modelo de objeto de retorno em caso de sucesso (Status Code 200):
 [
 
     {
-    
+
         "id": 1,
-        
+
         "type": "SUBSCRIPTION PURCHASED",
-        
+
         "subscriptionId": {
-        
-            "id": 1,
-            
-            "statusId": {
-            
-                "id": 1,
-                
-                "name": "SUBSCRIPTION_PURCHASED"
-                
+
+            "id": "402880987c77d565017c77d5a5be0000",
+
+            "status": {
+
+                "id": 2,
+
+                "type": "SUBSCRIPTION CANCELED"
+
             },
-            
-            "createdAt": "07/10/2021 01:17:34",
-            
-            "updatedAt": "07/10/2021 01:26:46"
-            
+
+            "createdAt": "13/10/2021 01:07:43",
+
+            "updatedAt": "13/10/2021 01:07:59"
+
         },
-        
-        "createdAt": "07/10/2021 01:17:34"
-        
+
+        "createdAt": "13/10/2021 01:07:43"
+
+    },
+
+    {
+        "id": 2,
+
+        "type": "SUBSCRIPTION CANCELED",
+
+        "subscriptionId": {
+
+            "id": "402880987c77d565017c77d5a5be0000",
+
+            "status": {
+
+                "id": 2,
+
+                "type": "SUBSCRIPTION CANCELED"
+
+            },
+
+            "createdAt": "13/10/2021 01:07:43",
+
+            "updatedAt": "13/10/2021 01:07:59"
+
+        },
+
+        "createdAt": "13/10/2021 01:07:59"
+
     }
-    
+
 ]
 
 Modelo de objeto de retorno em caso da assinatura do usuário não for encontrada (Status Code 404):
@@ -121,6 +149,33 @@ Obter o histórico de notificações por id.
 
 Modelo de objeto de retorno em caso de sucesso (Status Code 200):
 
+{
+
+    "id": 1,
+
+    "type": "SUBSCRIPTION PURCHASED",
+    
+    "subscriptionId": {
+
+        "id": "402880987c77d565017c77d5a5be0000",
+
+        "status": {
+
+            "id": 2,
+
+            "type": "SUBSCRIPTION CANCELED"
+
+        },
+
+        "createdAt": "13/10/2021 01:07:43",
+
+        "updatedAt": "13/10/2021 01:07:59"
+
+    },
+
+    "createdAt": "13/10/2021 01:07:43"
+
+}
 
 Modelo de objeto de retorno em caso da assinatura do usuário não for encontrada (Status Code 404):
 
@@ -148,19 +203,29 @@ Modelo de objeto de retorno em caso de sucesso (Status Code 200):
 {
 
     "id": 1,
-    
-    "statusId": {
-    
-        "id": 1,
-        
-        "name": "SUBSCRIPTION_PURCHASED"
-        
+
+    "type": "SUBSCRIPTION PURCHASED",
+
+    "subscriptionId": {
+
+        "id": "402880987c77d565017c77d5a5be0000",
+
+        "status": {
+
+            "id": 2,
+
+            "type": "SUBSCRIPTION CANCELED"
+
+        },
+
+        "createdAt": "13/10/2021 01:07:43",
+
+        "updatedAt": "13/10/2021 01:07:59"
+
     },
-    
-    "createdAt": "07/10/2021 01:17:34",
-    
-    "updatedAt": "07/10/2021 01:26:46"
-    
+
+    "createdAt": "13/10/2021 01:07:43"
+
 }
 
 Modelo de objeto de retorno em caso da assinatura do usuário não for encontrada (Status Code 404):
@@ -188,7 +253,7 @@ Modelo de objeto de retorno em caso de sucesso (Status Code 201):
 
 {
 
-    "id": 1,
+    "id": "402880987c77d565017c77d5a5be0000",
     
     "statusId": {
     
@@ -198,9 +263,9 @@ Modelo de objeto de retorno em caso de sucesso (Status Code 201):
         
     },
     
-    "createdAt": "07/10/2021 01:47:37",
+    "createdAt": "07/10/2021 01:07:43",
     
-    "updatedAt": "07/10/2021 01:47:37"
+    "updatedAt": "07/10/2021 01:07:43"
     
 }
 
@@ -235,4 +300,3 @@ Modelo de objeto de retorno em caso de não encontrado (Status Code 404):
 ________________________________________
 
 Para quaisquer dúvidas enviar e-mail para: rafaelrj@live.com
-
