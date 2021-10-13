@@ -23,8 +23,7 @@ public class SwaggerConfig {
 	
 	private final ResponseMessage m200 = simpleMessage(200, "Search Success.");
 	private final ResponseMessage m201 = simpleMessage(201, "Created Successfully.");
-	private final ResponseMessage m204 = simpleMessage(204, "Updated planet.");
-	private final ResponseMessage m400 = simpleMessage(400, "The subscription exist.");
+	private final ResponseMessage m204 = simpleMessage(204, "Updated subscription.");
 	private final ResponseMessage m404 = simpleMessage(404, "The subscription was not found.");
 	private final ResponseMessage m500 = simpleMessage(500, "Unexpected error.");
 
@@ -33,7 +32,7 @@ public class SwaggerConfig {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.useDefaultResponseMessages(false)
 				.globalResponseMessage(RequestMethod.GET, Arrays.asList(m200, m404, m500))
-				.globalResponseMessage(RequestMethod.POST, Arrays.asList(m201, m400, m500))
+				.globalResponseMessage(RequestMethod.POST, Arrays.asList(m201, m500))
 				.globalResponseMessage(RequestMethod.PATCH, Arrays.asList(m204, m404, m500))
 				.select()
 				.apis(RequestHandlerSelectors
@@ -54,14 +53,11 @@ public class SwaggerConfig {
 				"rafaelrj@live.com"),
 				"Restricted use for Globo.", 
 				"", 
-				Collections.emptyList() 
-																	
+				Collections.emptyList() 														
 		);
 	}
 	
 	private ResponseMessage simpleMessage(int code, String msg) {
 		return new ResponseMessageBuilder().code(code).message(msg).build();
 	}
-
-
 }
