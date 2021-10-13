@@ -6,10 +6,11 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,13 +19,17 @@ public class Subscription implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(
+			name = "UUID",
+			strategy = "org.hibernate.id.UUIDHexGenerator"
+	)
 	@Column(name = "subscription_id")
-	private Integer id;
+	private String id;
 
 	@OneToOne
 	@JoinColumn(name = "status_id")
-	private Status statusId;
+	private Status status;
 
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm:ss")
 	@Column(name="created_at")
@@ -36,32 +41,33 @@ public class Subscription implements Serializable {
 	public Subscription() {
 	}
 
-	public Subscription(Integer id, Status statusId, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		this.id = id;
-		this.statusId = statusId;
+	public Subscription(Status statusId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.status = statusId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
 
+	public Subscription(String id, Status statusId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		this.id = id;
+		this.status = statusId;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-
-	public Status getStatus_id() {
-		return statusId;
-	}
 	
-	public Status getStatusId() {
-		return statusId;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setStatusId(Status statusId) {
-		this.statusId = statusId;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public LocalDateTime getCreatedAt() {
@@ -98,11 +104,8 @@ public class Subscription implements Serializable {
 			return false;
 		Subscription other = (Subscription) obj;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+			return other.id == null;
+		} else return id.equals(other.id);
 	}
 		
 }

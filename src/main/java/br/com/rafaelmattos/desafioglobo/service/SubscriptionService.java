@@ -1,7 +1,10 @@
 package br.com.rafaelmattos.desafioglobo.service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,58 +26,69 @@ public class SubscriptionService {
 	@Autowired
 	EventHistoryRepository eventHistoryRepository;
 
-	public Subscription findSubscriptionById(Integer id) {
+	public Subscription findSubscriptionById(String id) {
 		Optional<Subscription> subscription = subscriptionRepository.findById(id);
-		System.out.print(subscription);
 		return subscription.orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + Subscription.class.getName()));
 	}
 
+	@Transactional
 	public Subscription createSubscription() {
-		LocalDateTime date = LocalDateTime.now();
-		Subscription subscription = new Subscription();
-		Status status = new Status();
-		SubscriptionType subscriptionPurchased = SubscriptionType.SUBSCRIPTION_PURCHASED;
-		status.setName(subscriptionPurchased.getDescription());
-		status.setId(subscriptionPurchased.getCod());
-		subscription.setStatusId(status);
-		subscription.setCreatedAt(date);
-		subscription.setUpdatedAt(date);
-		subscription = subscriptionRepository.save(subscription);
 
-		EventHistory eventHistory = new EventHistory();
-		eventHistory.setType(subscriptionPurchased.getDescription());
-		eventHistory.setSubscriptionId(subscription);
-		eventHistory.setCreatedAt(date);
-		eventHistoryRepository.save(eventHistory);
+		LocalDateTime date = LocalDateTime.now();
+		SubscriptionType subscriptionPurchased = SubscriptionType.SUBSCRIPTION_PURCHASED;
+		Subscription subscription =
+				new Subscription(new Status(subscriptionPurchased.getCod(),
+						subscriptionPurchased.getType()),
+						date,
+						date);
+
+		subscription = subscriptionRepository.save(subscription);
+		eventHistoryRepository.save(new EventHistory(subscriptionPurchased.getType(),
+				subscription,
+				date));
 
 		return subscription;
 	}
 
-	public Subscription updateSubscription(Integer id) {
-		Subscription updateSubscription = subscriptionRepository.findById(id).get();
-		System.out.print(updateSubscription);
-		LocalDateTime date = LocalDateTime.now();
-		updateSubscription.setUpdatedAt(date);
-		if (updateSubscription.getStatusId().getName() == "SUBSCRIPTION_PURCHASED") {
-			Status status = new Status();
-			status.setId(2);
-			status.setName("SUBSCRIPTION_CANCELED");
-			updateSubscription.setStatusId(status);
-		}
-		if (updateSubscription.getStatusId().getName() == "SUBSCRIPTION_CANCELED") {
-			Status status = new Status();
-			status.setId(3);
-			status.setName("SUBSCRIPTION_RESTARTED");
-			updateSubscription.setStatusId(status);
-		}
-		if (updateSubscription.getStatusId().getName() == "SUBSCRIPTION_RESTARTED") {
-			Status status = new Status();
-			status.setId(2);
-			status.setName("SUBSCRIPTION_CANCELED");
-			updateSubscription.setStatusId(status);
-		}
-		return subscriptionRepository.save(updateSubscription);
+	public Subscription updateSubscription(String id) {
+		Subscription updateSubscription = subscriptionRepository.findById(id)
+				.orElseThrow(() -> new ObjectNotFoundException(
+						"Object not found! Id: " + id + ", Type: " + Subscription.class.getName()));
+
+		updateSubscription = updateStatus(updateSubscription);
+
+		updateSubscription.setUpdatedAt(LocalDateTime.now());
+
+		updateSubscription = subscriptionRepository.save(updateSubscription);
+
+		EventHistory eventHistory = new EventHistory(updateSubscription.getStatus().getType()
+				,updateSubscription,updateSubscription.getUpdatedAt());
+
+		eventHistoryRepository.save(eventHistory);
+
+		return updateSubscription;
 	}
 
+	public Subscription updateStatus(Subscription updateSubscription) {
+
+		if (Objects.equals(updateSubscription.getStatus().getType(), SubscriptionType.SUBSCRIPTION_PURCHASED.getType())) {
+			Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED.getCod(), SubscriptionType.SUBSCRIPTION_CANCELED.getType());
+			updateSubscription.setStatus(status);
+			return updateSubscription;
+		}
+
+		if (Objects.equals(updateSubscription.getStatus().getType(), SubscriptionType.SUBSCRIPTION_CANCELED.getType())) {
+			Status status = new Status(SubscriptionType.SUBSCRIPTION_RESTARTED.getCod(), SubscriptionType.SUBSCRIPTION_RESTARTED.getType());
+			updateSubscription.setStatus(status);
+			return updateSubscription;
+		}
+
+		if (Objects.equals(updateSubscription.getStatus().getType(), SubscriptionType.SUBSCRIPTION_RESTARTED.getType())) {
+			Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED.getCod(), SubscriptionType.SUBSCRIPTION_CANCELED.getType());
+			updateSubscription.setStatus(status);
+			return updateSubscription;
+		}
+		return null;
+	}
 }
