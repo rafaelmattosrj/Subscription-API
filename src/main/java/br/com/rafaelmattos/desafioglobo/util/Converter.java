@@ -1,6 +1,7 @@
 package br.com.rafaelmattos.desafioglobo.util;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -8,13 +9,12 @@ import org.springframework.stereotype.Component;
 import br.com.rafaelmattos.desafioglobo.domain.EventHistory;
 import br.com.rafaelmattos.desafioglobo.domain.Subscription;
 import br.com.rafaelmattos.desafioglobo.dto.EventHistoryResponse;
-import br.com.rafaelmattos.desafioglobo.dto.SubscriptionRequest;
 import br.com.rafaelmattos.desafioglobo.dto.SubscriptionResponse;
 
 @Component
 public class Converter {
 
-	public List<EventHistoryResponse> toEventHistoryResponse(List<EventHistory> listEventHistory) {
+	public List<EventHistoryResponse> toEventHistoriesResponse(List<EventHistory> listEventHistory) {
 
 		if (!(listEventHistory == null)) {
 
@@ -32,8 +32,8 @@ public class Converter {
 			EventHistoryResponse eventHistoryResponse = new EventHistoryResponse();
 
 			eventHistoryResponse.setId(eventHistory.getId());
-			eventHistoryResponse.setType(eventHistory.getType().getDescription());
-			eventHistoryResponse.setSubscriptionId(eventHistory.getSubscriptionId());
+			eventHistoryResponse.setType(eventHistory.getType().getType());
+			eventHistoryResponse.setSubscriptionId(eventHistory.getSubscription());
 			eventHistoryResponse.setCreatedAt(eventHistory.getCreatedAt());
 
 			return eventHistoryResponse;
@@ -42,26 +42,19 @@ public class Converter {
 	}
 
 	public SubscriptionResponse toSubscriptionResponse(Subscription subscription) {
-
-		if (!(subscription == null)) {
-			SubscriptionResponse subscriptionResponse = new SubscriptionResponse();
-
-			subscriptionResponse.setId(subscription.getId());
-			subscriptionResponse.setStatusId(subscription.getStatusId());
-			subscriptionResponse.setCreatedAt(subscription.getCreatedAt());
-			subscriptionResponse.setUpdatedAt(subscription.getUpdatedAt());
-
-			return subscriptionResponse;
+	
+		if (Objects.nonNull(subscription)) {
+			return new SubscriptionResponse(subscription);
 		}
 		return null;
 	}
 
-	public Subscription requestToSubscription(SubscriptionRequest subscriptionRequest) {
-		if (!(subscriptionRequest == null)) {
+	public Subscription responseToSubscription(SubscriptionResponse subscriptionResponse) {
+		if (!(subscriptionResponse == null)) {
 			Subscription subscription = new Subscription();
 
-			subscription.setStatusId(subscriptionRequest.getStatusId());
-			subscription.setUpdatedAt(subscriptionRequest.getUpdatedAt());
+			subscription.setStatus(subscriptionResponse.getStatusId());
+			subscription.setUpdatedAt(subscriptionResponse.getUpdatedAt());
 
 			return subscription;
 		}
