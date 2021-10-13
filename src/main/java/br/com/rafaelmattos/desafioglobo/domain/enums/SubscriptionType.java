@@ -2,24 +2,24 @@ package br.com.rafaelmattos.desafioglobo.domain.enums;
 
 public enum SubscriptionType {
 
-	SUBSCRIPTION_PURCHASED(1, "SUBSCRIPTION PURCHASED"), 
+	SUBSCRIPTION_PURCHASED(1, "SUBSCRIPTION PURCHASED"),
 	SUBSCRIPTION_CANCELED(2, "SUBSCRIPTION CANCELED"),
 	SUBSCRIPTION_RESTARTED(3, "SUBSCRIPTION RESTARTED");
 
-	private int cod;
-	private String description;
+	private final int cod;
+	private final String type;
 
-	private SubscriptionType(int cod, String description) {
+	SubscriptionType(Integer cod, String type) {
 		this.cod = cod;
-		this.description = description;
+		this.type = type;
 	}
 
 	public int getCod() {
 		return cod;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getType() {
+		return type;
 	}
 
 	public static SubscriptionType toEnum(String type) {
@@ -29,7 +29,7 @@ public enum SubscriptionType {
 		}
 
 		for (SubscriptionType x : SubscriptionType.values()) {
-			if (type.equals(x.getDescription())) {
+			if (type.equals(x.getType())) {
 				return x;
 			}
 		}

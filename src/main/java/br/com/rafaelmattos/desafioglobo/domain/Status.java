@@ -8,22 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
+
 @Entity
 public class Status implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "status_id")
 	private Integer id;
-	private String name;
+	private String type;
 	
 	public Status() {
 	}
 
-	public Status(Integer id, String name) {
+	public Status(Integer id, String type) {
 		this.id = id;
-		this.name = name;
+		this.type = type;
+	}
+
+	public Status (SubscriptionType type) {
+		this.id = type.getCod();
+		this.type = type.getType();
 	}
 
 	public Integer getId() {
@@ -34,12 +42,12 @@ public class Status implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getType() {
+		return type;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }
