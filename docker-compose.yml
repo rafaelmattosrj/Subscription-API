@@ -1,29 +1,34 @@
-version: '3.3'
+version: '3.1'
 
 services:
     
  mysql:
     image: mysql
+    container_name: mysql
     ports:
       - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rafaelsql
+      MYSQL_DATABASE: desafioglobo
+      MYSQL_PASSWORD: rafaelsql
     networks:
-      - java-mysql-network
+      - java-mysql-network      
       
  desafioglobo:    
     build:
       dockerfile: ./Dockerfile
       context: .
-    image: rafael/desafioglobo
+    image: desafioglobo
     container_name: desafioglobo
-    environment:
-     - SPRING_DATA_MYSQL_URI=jdbc:mysql://localhost:3306/desafioglobo
     ports:
-     - "8080:8080"
+     - 8080:8080
     depends_on: 
-    - "mysql"
+     - mysql
+    networks:
+     - java-mysql-network    
            
 networks: 
   java-mysql-network:
     driver: bridge
-    
+
    
