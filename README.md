@@ -13,7 +13,7 @@ A aplicação utiliza como o MySQL como banco de dados com o schema desafioglobo
 
 ________________________________________
 Observação:
-•	Pode ser encontrado no path http://localhost:8080/desafioglobo/swagger-ui.html informações sobre os recursos da aplicação.
+•	Pode ser encontrado no path http://localhost:8080/swagger-ui.html informações sobre os recursos da aplicação.
 
 A API DesafioGlobo está em constante evolução e até o momento foram utilizados no desenvolvimento:
 
@@ -69,42 +69,75 @@ Obter todo o histórico de notificações da assinatura do usuário.
 Modelo de objeto de retorno em caso de sucesso (Status Code 200): 
 
 [
+
     {
+
         "id": 1,
+
         "type": "SUBSCRIPTION PURCHASED",
+
         "subscriptionId": {
+
             "id": "402880987c77d565017c77d5a5be0000",
+
             "status": {
+
                 "id": 2,
+
                 "type": "SUBSCRIPTION CANCELED"
+
             },
+
             "createdAt": "13/10/2021 01:07:43",
+
             "updatedAt": "13/10/2021 01:07:59"
+
         },
+
         "createdAt": "13/10/2021 01:07:43"
+
     },
+
     {
+
         "id": 2,
+
         "type": "SUBSCRIPTION CANCELED",
+
         "subscriptionId": {
+
             "id": "402880987c77d565017c77d5a5be0000",
+
             "status": {
+
                 "id": 2,
+
                 "type": "SUBSCRIPTION CANCELED"
+
             },
+
             "createdAt": "13/10/2021 01:07:43",
+
             "updatedAt": "13/10/2021 01:07:59"
+
         },
+
         "createdAt": "13/10/2021 01:07:59"
+
     }
+
 ]
 
 Modelo de objeto de retorno em caso da assinatura do usuário não for encontrada (Status Code 404):
 
 {
+
     "status": 404, 
-    "msg": "Object not found! Id: 5, Type: br.com.rafaelmattos.desafioglobo.domain.Subscription",   
+
+    "msg": "Object not found! Id: 5, Type: br.com.rafaelmattos.desafioglobo.domain.Subscription", 
+
     "timeStamp": 1633580652006  
+
 }
 
 
@@ -118,26 +151,43 @@ Obter o histórico de notificações por id.
 Modelo de objeto de retorno em caso de sucesso (Status Code 200):
 
 {
+
     "id": 1,
+
     "type": "SUBSCRIPTION PURCHASED",
+
     "subscriptionId": {
+
         "id": "402880987c77d565017c77d5a5be0000",
+
         "status": {
+
             "id": 2,
+
             "type": "SUBSCRIPTION CANCELED"
+
         },
+
         "createdAt": "13/10/2021 01:07:43",
+
         "updatedAt": "13/10/2021 01:07:59"
+
     },
+
     "createdAt": "13/10/2021 01:07:43"
+
 }
 
 Modelo de objeto de retorno em caso da assinatura do usuário não for encontrada (Status Code 404):
 
 {
+
     "status": 404,
-    "msg": "Object not found! Id: 10, Type: br.com.rafaelmattos.desafioglobo.domain.EventHistory",  
+
+    "msg": "Object not found! Id: 10, Type: br.com.rafaelmattos.desafioglobo.domain.EventHistory", 
+
     "timeStamp": 1633581650824  
+
 }
 
 
@@ -151,26 +201,43 @@ Obter dados de registro da assinatura.
 Modelo de objeto de retorno em caso de sucesso (Status Code 200):
 
 {
+
     "id": 1,
+
     "type": "SUBSCRIPTION PURCHASED",
+
     "subscriptionId": {
+
         "id": "402880987c77d565017c77d5a5be0000",
+
         "status": {
+
             "id": 2,
+
             "type": "SUBSCRIPTION CANCELED"
+            
         },
+
         "createdAt": "13/10/2021 01:07:43",
+
         "updatedAt": "13/10/2021 01:07:59"
+
     },
+
     "createdAt": "13/10/2021 01:07:43"
+
 }
 
 Modelo de objeto de retorno em caso da assinatura do usuário não for encontrada (Status Code 404):
 
 {
+
     "status": 404,
+
     "msg": "Object not found! Id: 10, Type: br.com.rafaelmattos.desafioglobo.domain.Subscription",
+
     "timeStamp": 1633581869070
+
 }
 
 
@@ -184,13 +251,21 @@ Cadastrar assinatura.
 Modelo de objeto de retorno em caso de sucesso (Status Code 201):
 
 {
+
     "id": "402880987c77d565017c77d5a5be0000",
+
     "statusId": {
+
         "id": 1,  
-        "name": "SUBSCRIPTION PURCHASED"   
+
+        "name": "SUBSCRIPTION PURCHASED"  
+
     },
+
     "createdAt": "07/10/2021 01:07:43",
+
     "updatedAt": "07/10/2021 01:07:43"
+
 }
 
 
@@ -205,14 +280,19 @@ Modelo de objeto de retorno em caso de sucesso (Status Code 204):
 
 {
 
+
 }
 
 Modelo de objeto de retorno em caso de não encontrado (Status Code 404):
 
 {
+
     "status": 404,  
+
     "msg": "Object not found! Id: 10, Type: br.com.rafaelmattos.desafioglobo.domain.Subscription",
+
     "timeStamp": 1633582211042 
+
 }
 
 
