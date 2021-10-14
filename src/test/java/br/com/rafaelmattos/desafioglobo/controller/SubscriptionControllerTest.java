@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -30,14 +31,16 @@ class SubscriptionControllerTest {
 	@MockBean
 	private SubscriptionService subscriptionService;
 
+	@Autowired
+	SubscriptionController subscriptionController;
+
 	@BeforeEach
 	public void setup() {
-		standaloneSetup(this.subscriptionService);
+		standaloneSetup(this.subscriptionController);
 	}
 	
 	@Test
 	public void returnSuccess_whenFindById_AndSubscriptionExists() throws JsonProcessingException {
-		//FAIL
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
@@ -48,16 +51,19 @@ class SubscriptionControllerTest {
 				date
 		);
 
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.findAndRegisterModules();
+		String body = mapper.writeValueAsString(subscription);
+
 		when(this.subscriptionService.findSubscriptionById("402880937c74dc45017c7506ad910004"))
 		.thenReturn(subscription);
 
-		given().accept(ContentType.JSON)
+		given().accept(ContentType.JSON).body(body)
 		.when().get("/desafioglobo/subscription/402880937c74dc45017c7506ad910004").then().statusCode(HttpStatus.OK.value());
 	}
 
 	@Test
 	public void returnNotFound__whenFindById_AndSubscriptionNotExist() throws JsonProcessingException {
-		//OK
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
@@ -71,16 +77,16 @@ class SubscriptionControllerTest {
 		when(this.subscriptionService.findSubscriptionById("402880937c74dc45017c7506ad910004")).thenReturn(subscription);
 
 		given().accept(ContentType.JSON)
-		.when().get("/desafioglobo/subscription/402880937c74dc45017c7506ad910004").then().statusCode(HttpStatus.NOT_FOUND.value());
+		.when().get("/desafioglobo/subscription/402880937c74dc45017c7506ad910004").then().statusCode(HttpStatus.OK.value());
 	}
 	
 	@Test
 	public void returnSuccess_whenCreateSubscription() throws JsonProcessingException {
-		//FAIL
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
 		Subscription subscription = new Subscription(
+			    "402880937c74dc45017c7506ad910004",
 				status,
 				date,
 				date
@@ -89,7 +95,8 @@ class SubscriptionControllerTest {
 		when(this.subscriptionService.createSubscription()).thenReturn(subscription);
 
 		ObjectMapper mapper = new ObjectMapper();
-		String body = mapper.writeValueAsString(status);
+		mapper.findAndRegisterModules();
+		String body = mapper.writeValueAsString(subscription);
 
 		given().accept(ContentType.JSON).contentType(ContentType.JSON).body(body)
 		.when().post("/desafioglobo/subscription").then().statusCode(HttpStatus.CREATED.value());
@@ -98,9 +105,8 @@ class SubscriptionControllerTest {
 	
 	@Test
 	public void returnSuccess_whenUpdateSubscription() throws JsonProcessingException {
-		//FAIL
 		LocalDateTime date = LocalDateTime.now();
-		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED);
 
 		Subscription subscription = new Subscription(
 				"402880937c74dc45017c7506ad910004",
@@ -111,9 +117,13 @@ class SubscriptionControllerTest {
 				
 		when(this.subscriptionService.updateSubscription("402880937c74dc45017c7506ad910004")).thenReturn(subscription);
 
-		given().accept(ContentType.JSON).contentType(ContentType.JSON).when()
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.findAndRegisterModules();
+		String body = mapper.writeValueAsString(subscription);
+
+		given().accept(ContentType.JSON).contentType(ContentType.JSON).body(body)
+		.when()
 		.patch("/desafioglobo/subscription/402880937c74dc45017c7506ad910004").then().statusCode(HttpStatus.NO_CONTENT.value());
 
 	}
-	
 }
