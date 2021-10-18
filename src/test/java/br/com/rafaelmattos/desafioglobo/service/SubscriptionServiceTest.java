@@ -58,4 +58,21 @@ class SubscriptionServiceTest {
 				.findSubscriptionById("402880937c74dc45017c7506ad910004");
 		assertEquals(subscription, subscriptionReturn);
 	}
+	
+	@Test
+	public void returnSucess_testCreateSubscription() {
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
+
+		Subscription subscription = new Subscription(
+				status,
+				date,
+				date
+		);
+
+		when(subscriptionRepository.save(subscription)).thenReturn(subscription);
+		Subscription subscriptionCreated = subscriptionService.createSubscription(); 
+		assertEquals(subscription, subscriptionCreated);
+	}
+	
 }
