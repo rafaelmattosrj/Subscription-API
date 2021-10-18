@@ -9,7 +9,7 @@ ________________________________________
 Esta aplicação foi desenvolvida com arquitetura API REST e tem por objetivo criar, atualizar e armazenar histórico assinaturas do usuário de acordo com as notificações.
 URL Base: http://localhost:8080/desafioglobo/
 
-A aplicação utiliza como o MySQL como banco de dados com o schema desafioglobo criado. E no application-dev.properties utiliza as variáveis de ambiente para definição de usuário(BD_USERNAME) e senha(BD_PASSWORD) do banco de dados.
+A aplicação utiliza como o MySQL como banco de dados com o schema desafioglobo criado. E no application-dev.properties utiliza as variáveis de ambiente para definição de usuário(DB_USERNAME) e senha(DB_PASSWORD) do banco de dados.
 
 
 ________________________________________
