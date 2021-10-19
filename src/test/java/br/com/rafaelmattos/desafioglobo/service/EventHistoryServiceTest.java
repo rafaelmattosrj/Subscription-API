@@ -1,10 +1,12 @@
 package br.com.rafaelmattos.desafioglobo.service;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +22,7 @@ import br.com.rafaelmattos.desafioglobo.domain.Status;
 import br.com.rafaelmattos.desafioglobo.domain.Subscription;
 import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 import br.com.rafaelmattos.desafioglobo.repository.EventHistoryRepository;
+import br.com.rafaelmattos.desafioglobo.repository.SubscriptionRepository;
 
 @SpringBootTest(classes = DesafioGloboApplication.class)
 @ActiveProfiles(value = {"test"})
@@ -30,12 +33,43 @@ class EventHistoryServiceTest {
 
 	@MockBean
 	EventHistoryRepository eventHistoryRepository;
+	
+	@MockBean
+	SubscriptionRepository subscriptionRepository;
 
 	@BeforeEach
 	public void setup() {
 		standaloneSetup(this.eventHistoryService);
 	}
 
+	@Test
+	public void returnSucess_testFindAllEventSubscription() {
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
+
+		Subscription subscription = new Subscription(
+				"402880937c74dc45017c7506ad910004",
+				status,
+				date,
+				date
+		);
+
+		EventHistory eventHistory = new EventHistory(
+				1,
+				SubscriptionType.SUBSCRIPTION_PURCHASED.getType(),
+				subscription,
+				date
+		);
+
+		List<EventHistory> eventHistories = Arrays.asList(eventHistory);
+		when(subscriptionRepository.findById("402880937c74dc45017c7506ad910004")).thenReturn(Optional.of(subscription));
+		when(eventHistoryRepository.findAllBySubscription(subscription)).thenReturn(eventHistories);
+		List<EventHistory> eventHistoryReturn = eventHistoryService
+				.findAllBySubscriptionId("402880937c74dc45017c7506ad910004");
+
+				assertEquals(eventHistories, eventHistoryReturn);	
+	}
+	
 	@Test
 	public void returnSucess_testFindbyId() {
 		LocalDateTime date = LocalDateTime.now();
