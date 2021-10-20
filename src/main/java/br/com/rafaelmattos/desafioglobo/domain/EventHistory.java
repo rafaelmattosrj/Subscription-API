@@ -42,10 +42,10 @@ public class EventHistory implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public EventHistory(Integer id, String type, Subscription subscriptionId, LocalDateTime createdAt) {
+	public EventHistory(Integer id, String type, Subscription subscription, LocalDateTime createdAt) {
 		this.id = id;
 		this.type = type;
-		this.subscription = subscriptionId;
+		this.subscription = subscription;
 		this.createdAt = createdAt;
 	}
 

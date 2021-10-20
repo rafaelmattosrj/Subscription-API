@@ -1,7 +1,6 @@
 package br.com.rafaelmattos.desafioglobo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +23,15 @@ public class EventHistoryService {
 	}
 
 	public List<EventHistory> findAllBySubscriptionId(String subscriptionId) {
-		Subscription subscription = subscriptionRepository.findById(subscriptionId)
-				.orElseThrow(() -> new ObjectNotFoundException(
-						"Object not found! Id: " + subscriptionId + ", Type: " + Subscription.class.getName()));
-		
+		Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found! Id: " + subscriptionId + ", Type: " + EventHistory.class.getName()));
+				
 		List<EventHistory> eventHistory = eventHistoryRepository.findAllBySubscription(subscription);
 		return eventHistory;
 	}
 	
 	public EventHistory findEventHistoryById(Integer id) {
-		Optional<EventHistory> eventHistory = eventHistoryRepository.findById(id);
-		return eventHistory.orElseThrow(() -> new ObjectNotFoundException(
+		return eventHistoryRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Object not found! Id: " + id + ", Type: " + EventHistory.class.getName()));
 	}
 }

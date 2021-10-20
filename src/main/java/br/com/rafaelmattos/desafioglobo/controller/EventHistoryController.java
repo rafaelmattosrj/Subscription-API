@@ -28,9 +28,9 @@ public class EventHistoryController {
 	@ApiOperation(value = "Return all histories by subscription id.")
 	@RequestMapping(path = "/eventhistory/subscription/{id}",method = RequestMethod.GET)
 	public ResponseEntity<List<EventHistoryResponse>> findAllHistoriesBySubscriptionId(@PathVariable String id) {
-		List<EventHistory> listEventHistory = eventHistoryService.findAllBySubscriptionId(id);
-		List<EventHistoryResponse> listEventHistoryResponse = converter.toEventHistoriesResponse(listEventHistory);
-		return ResponseEntity.ok().body(listEventHistoryResponse);
+		List<EventHistory> eventHistories = eventHistoryService.findAllBySubscriptionId(id);
+		List<EventHistoryResponse> eventHistoriesResponse = converter.toEventHistoriesResponse(eventHistories);
+		return ResponseEntity.ok().body(eventHistoriesResponse);
 	}
 	
 	@ApiOperation(value = "Search event history by id.")

@@ -43,7 +43,7 @@ class EventHistoryServiceTest {
 	}
 
 	@Test
-	public void returnSucess_testFindAllEventHistoriesInSubscription() {
+	public void returnAListOfEventHistories_WhenFindAllEventHistoriesBySubscription() {
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
@@ -71,7 +71,7 @@ class EventHistoryServiceTest {
 	}
 	
 	@Test
-	public void returnSucess_testFindbyId() {
+	public void returnEventHistory_WhenFindbyId() {
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
