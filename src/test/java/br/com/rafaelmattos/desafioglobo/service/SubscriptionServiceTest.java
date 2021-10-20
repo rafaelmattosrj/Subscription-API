@@ -40,7 +40,7 @@ class SubscriptionServiceTest {
 	}
 
 	@Test
-	public void returnSucess_testFindbyId() {
+	public void returnSubscription_whenFindSubscriptionById() {
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
@@ -60,7 +60,7 @@ class SubscriptionServiceTest {
 	}
 	
 	@Test
-	public void returnSucess_testCreateSubscription() {
+	public void returnSubscription_whenCreateSubscription() {
 		LocalDateTime date = LocalDateTime.now();
 		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 
@@ -75,4 +75,57 @@ class SubscriptionServiceTest {
 		assertEquals(subscription, subscriptionCreated);
 	}
 	
+	@Test
+	public void returnrCanceled_WhenUpdateSubscriptionPurchased() {
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
+		String expected = new Status(SubscriptionType.SUBSCRIPTION_CANCELED).getType();
+
+		Subscription subscription = new Subscription(
+				"402880937c74dc45017c7506ad910004",
+				status,
+				date,
+				date
+		);
+		
+		Subscription updateStatus = subscriptionService.updateStatus(subscription);
+		String actual = updateStatus.getStatus().getType();
+		assertEquals(actual, expected);
+	}
+	
+	@Test
+	public void returnRestart_WhenUpdateSubscriptionCanceled() {
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED);
+		String expected = new Status(SubscriptionType.SUBSCRIPTION_RESTARTED).getType();
+
+		Subscription subscription = new Subscription(
+				"402880937c74dc45017c7506ad910004",
+				status,
+				date,
+				date
+		);
+		
+		Subscription updateStatus = subscriptionService.updateStatus(subscription);
+		String actual = updateStatus.getStatus().getType();
+		assertEquals(actual, expected);
+	}
+	
+	@Test
+	public void returnCanceled_WhenUpdateSubscriptionRestart() {
+		LocalDateTime date = LocalDateTime.now();
+		Status status = new Status(SubscriptionType.SUBSCRIPTION_RESTARTED);
+		String expected = new Status(SubscriptionType.SUBSCRIPTION_CANCELED).getType();
+
+		Subscription subscription = new Subscription(
+				"402880937c74dc45017c7506ad910004",
+				status,
+				date,
+				date
+		);
+		
+		Subscription updateStatus = subscriptionService.updateStatus(subscription);
+		String actual = updateStatus.getStatus().getType();
+		assertEquals(actual, expected);
+	}	
 }
