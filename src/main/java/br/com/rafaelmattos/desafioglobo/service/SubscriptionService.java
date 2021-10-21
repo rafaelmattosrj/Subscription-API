@@ -38,8 +38,7 @@ public class SubscriptionService {
 		LocalDateTime date = LocalDateTime.now();
 		SubscriptionType subscriptionPurchased = SubscriptionType.SUBSCRIPTION_PURCHASED;
 		Subscription subscription =
-				new Subscription(new Status(subscriptionPurchased.getCod(),
-						subscriptionPurchased.getType()),
+				new Subscription(new Status(subscriptionPurchased),
 						date,
 						date);
 
@@ -57,35 +56,28 @@ public class SubscriptionService {
 						"Object not found! Id: " + id + ", Type: " + Subscription.class.getName()));
 
 		updateSubscription = updateStatus(updateSubscription);
-
 		updateSubscription.setUpdatedAt(LocalDateTime.now());
-
 		updateSubscription = subscriptionRepository.save(updateSubscription);
-
 		EventHistory eventHistory = new EventHistory(updateSubscription.getStatus().getType()
 				,updateSubscription,updateSubscription.getUpdatedAt());
-
 		eventHistoryRepository.save(eventHistory);
-
 		return updateSubscription;
 	}
 
 	public Subscription updateStatus(Subscription updateSubscription) {
 
 		if (Objects.equals(updateSubscription.getStatus().getType(), SubscriptionType.SUBSCRIPTION_PURCHASED.getType())) {
-			Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED.getCod(), SubscriptionType.SUBSCRIPTION_CANCELED.getType());
+			Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED);
 			updateSubscription.setStatus(status);
 			return updateSubscription;
 		}
-
 		if (Objects.equals(updateSubscription.getStatus().getType(), SubscriptionType.SUBSCRIPTION_CANCELED.getType())) {
-			Status status = new Status(SubscriptionType.SUBSCRIPTION_RESTARTED.getCod(), SubscriptionType.SUBSCRIPTION_RESTARTED.getType());
+			Status status = new Status(SubscriptionType.SUBSCRIPTION_RESTARTED);
 			updateSubscription.setStatus(status);
 			return updateSubscription;
 		}
-
 		if (Objects.equals(updateSubscription.getStatus().getType(), SubscriptionType.SUBSCRIPTION_RESTARTED.getType())) {
-			Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED.getCod(), SubscriptionType.SUBSCRIPTION_CANCELED.getType());
+			Status status = new Status(SubscriptionType.SUBSCRIPTION_CANCELED);
 			updateSubscription.setStatus(status);
 			return updateSubscription;
 		}

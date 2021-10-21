@@ -22,19 +22,4 @@ public enum SubscriptionType {
 		return type;
 	}
 
-	public static SubscriptionType toEnum(String type) {
-
-		if (type == null) {
-			return null;
-		}
-
-		for (SubscriptionType x : SubscriptionType.values()) {
-			if (type.equals(x.getType())) {
-				return x;
-			}
-		}
-
-		throw new IllegalArgumentException("Id inválido: " + type);
-	}
-
 }

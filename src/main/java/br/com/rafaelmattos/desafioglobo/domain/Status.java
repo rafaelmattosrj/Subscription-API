@@ -14,13 +14,12 @@ import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 public class Status implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "status_id")
 	private Integer id;
 	private String type;
-	
+
 	public Status() {
 	}
 
@@ -28,8 +27,8 @@ public class Status implements Serializable {
 		this.id = id;
 		this.type = type;
 	}
-
-	public Status (SubscriptionType type) {
+	
+	public Status(SubscriptionType type) {
 		this.id = type.getCod();
 		this.type = type.getType();
 	}
@@ -49,5 +48,5 @@ public class Status implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 }
