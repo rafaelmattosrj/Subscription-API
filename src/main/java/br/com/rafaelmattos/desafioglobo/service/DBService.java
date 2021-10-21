@@ -3,11 +3,11 @@ package br.com.rafaelmattos.desafioglobo.service;
 import java.text.ParseException;
 import java.util.Arrays;
 
-import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.rafaelmattos.desafioglobo.domain.Status;
+import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 import br.com.rafaelmattos.desafioglobo.repository.StatusRepository;
 
 @Service
