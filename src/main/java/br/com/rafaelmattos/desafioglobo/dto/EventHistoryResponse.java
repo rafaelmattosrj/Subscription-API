@@ -23,7 +23,7 @@ public class EventHistoryResponse implements Serializable {
 
 		public EventHistoryResponse(EventHistory eventHistory) {
 			id = eventHistory.getId();
-			type = eventHistory.getType().getType();
+			type = eventHistory.getSubscription().getStatus().getType();
 			subscriptionId = eventHistory.getSubscription();
 			createdAt = eventHistory.getCreatedAt();
 		}

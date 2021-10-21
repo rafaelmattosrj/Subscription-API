@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
-
 @Entity
 public class EventHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -57,8 +55,8 @@ public class EventHistory implements Serializable {
 		this.id = id;
 	}
 
-	public SubscriptionType getType() {
-		return SubscriptionType.toEnum(type);
+	public String getType() {
+		return type;
 	}
 
 	public void setType(String type) {

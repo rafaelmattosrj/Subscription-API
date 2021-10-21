@@ -32,7 +32,7 @@ public class Converter {
 			EventHistoryResponse eventHistoryResponse = new EventHistoryResponse();
 
 			eventHistoryResponse.setId(eventHistory.getId());
-			eventHistoryResponse.setType(eventHistory.getType().getType());
+			eventHistoryResponse.setType(eventHistory.getSubscription().getStatus().getType());
 			eventHistoryResponse.setSubscriptionId(eventHistory.getSubscription());
 			eventHistoryResponse.setCreatedAt(eventHistory.getCreatedAt());
 
