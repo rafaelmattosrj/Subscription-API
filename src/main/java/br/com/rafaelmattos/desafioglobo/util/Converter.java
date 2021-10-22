@@ -16,7 +16,7 @@ public class Converter {
 
 	public List<EventHistoryResponse> toEventHistoriesResponse(List<EventHistory> listEventHistory) {
 
-		if (!(listEventHistory == null)) {
+		if (Objects.nonNull(listEventHistory)) {
 
 			List<EventHistoryResponse> eventHistoryResponse = listEventHistory.stream()
 					.map(obj -> new EventHistoryResponse(obj)).collect(Collectors.toList());
@@ -28,11 +28,11 @@ public class Converter {
 
 	public EventHistoryResponse toEventHistoryResponse(EventHistory eventHistory) {
 
-		if (!(eventHistory == null)) {
+		if (Objects.nonNull(eventHistory)) {
 			EventHistoryResponse eventHistoryResponse = new EventHistoryResponse();
 
 			eventHistoryResponse.setId(eventHistory.getId());
-			eventHistoryResponse.setType(eventHistory.getSubscription().getStatus().getType());
+			eventHistoryResponse.setType(eventHistory.getType());
 			eventHistoryResponse.setSubscriptionId(eventHistory.getSubscription());
 			eventHistoryResponse.setCreatedAt(eventHistory.getCreatedAt());
 
@@ -50,7 +50,7 @@ public class Converter {
 	}
 
 	public Subscription responseToSubscription(SubscriptionResponse subscriptionResponse) {
-		if (!(subscriptionResponse == null)) {
+		if (Objects.nonNull(subscriptionResponse)) {
 			Subscription subscription = new Subscription();
 
 			subscription.setStatus(subscriptionResponse.getStatusId());
