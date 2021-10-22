@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,9 +25,8 @@ import br.com.rafaelmattos.desafioglobo.domain.enums.SubscriptionType;
 import br.com.rafaelmattos.desafioglobo.service.EventHistoryService;
 import io.restassured.http.ContentType;
 
-
 @SpringBootTest(classes = DesafioGloboApplication.class)
-@ActiveProfiles(value = {"test"})
+
 class EventHistoryControllerTest {
 	
 	@MockBean

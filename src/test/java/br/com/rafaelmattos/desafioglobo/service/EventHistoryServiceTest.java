@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 
 import br.com.rafaelmattos.desafioglobo.DesafioGloboApplication;
 import br.com.rafaelmattos.desafioglobo.domain.EventHistory;
@@ -25,7 +24,6 @@ import br.com.rafaelmattos.desafioglobo.repository.EventHistoryRepository;
 import br.com.rafaelmattos.desafioglobo.repository.SubscriptionRepository;
 
 @SpringBootTest(classes = DesafioGloboApplication.class)
-@ActiveProfiles(value = {"test"})
 class EventHistoryServiceTest {
 
 	@Autowired
