@@ -1,6 +1,5 @@
 package br.com.rafaelmattos.desafioglobo.service;
 
-import java.text.ParseException;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class DBService {
 	@Autowired
 	private StatusRepository statusRepository;
 
-	public void instantiateTestDatabase () throws ParseException {
+	public void instantiateTestDatabase () {
 		
 		Status status1 = new Status(SubscriptionType.SUBSCRIPTION_PURCHASED);
 		Status status2 = new Status(SubscriptionType.SUBSCRIPTION_CANCELED);
